@@ -1,0 +1,39 @@
+<MDRoundFlatButton>
+    text_color: "white"
+    md_bg_color: [0,1,0,1]
+    size_hint_x: 1
+    pos_hint: {'center_x': 0.5}
+
+
+
+MDScreen:
+    md_bg_color: [1,0,0,1]
+
+    MDCard:
+        orientation: 'vertical'
+        padding: 20
+        size: 300, 200
+        size_hint: None, None
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: 20
+
+            spacing: 20
+
+            MDRoundFlatButton:
+                id: fill_form
+                text: "Wypełnij formularz"
+
+
+            MDRoundFlatButton:
+                id: settings
+                text: "Ustawienia"
+
+
+            MDRoundFlatButton:
+                id: quit
+                text: "Wyjście"
+                on_press: app.exit_func()
