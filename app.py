@@ -1,5 +1,6 @@
 from kivymd.app import MDApp
 from kivy.lang.builder import Builder
+from settings.settings_screen import SettingsApp
 from kivymd.uix.button.button import MDFlatButton
 
 class MainApp(MDApp):
@@ -12,7 +13,8 @@ class MainApp(MDApp):
 
     def settings_button(self):
         self.root.clear_widgets()
-        self.root.add_widget(Builder.load_file('settings/settings.kv'))
+        # SettingsApp().run()
+        # self.root.add_widget(Builder.load_file('settings/settings.kv'))
 
 
 
