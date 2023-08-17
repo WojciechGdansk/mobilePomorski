@@ -176,5 +176,5 @@ pyrightconfig.json
 .idea
 Pipfile
 Pipfile.lock
-bbb.docx
+email_configurator/bbb.docx
 # End of https://www.toptal.com/developers/gitignore/api/python

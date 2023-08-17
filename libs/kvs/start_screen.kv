@@ -1,0 +1,43 @@
+<StartScreen>
+
+    name: 'StartScreen'
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        md_bg_color: [0.5,0,0,1]
+        spacing: 20
+        size: root.width, root.height
+
+        MDBoxLayout:
+            size_hint_y: 0.2
+
+
+        MDRoundFlatButton:
+            id: fill_form
+            text: "Wypełnij formularz"
+            text_color: "white"
+            md_bg_color: [0,1,0,1]
+            size_hint_x: 1
+            pos_hint: {'center_x': 0.5}
+
+        MDRoundFlatButton:
+            id: settings
+            text: "Ustawienia"
+            on_press: root.manager.current = "SettingsScreen"
+            text_color: "white"
+            md_bg_color: [0,1,0,1]
+            size_hint_x: 1
+            pos_hint: {'center_x': 0.5}
+
+        MDRoundFlatButton:
+            id: quit
+            text: "Wyjście"
+            on_press: app.exit_func()
+            text_color: "white"
+            md_bg_color: [0,1,0,1]
+            size_hint_x: 1
+            pos_hint: {'center_x': 0.5}
+
+        MDBoxLayout:
+            size_hint_y: 0.2
