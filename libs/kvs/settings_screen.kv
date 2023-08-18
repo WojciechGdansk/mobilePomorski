@@ -1,6 +1,8 @@
 <SettingsScreen>
 
     name: "SettingsScreen"
+    id: dupa
+
 
     MDBoxLayout:
         orientation: 'vertical'
@@ -13,36 +15,28 @@
             size_hint_y: 0.4
             md_bg_color: [0.89,0.12,0.545,1]
 
+
+        MDTextField:
+            id: from_email_address
+            hint_text: "Z jakiego adresu wysłać wiadomość"
+            color: 0.57, 0.12, 1, 1
+            halign: 'center'
+            md_bg_color: 0.8, 0.489, 0.598, 1
+
+        MDTextField:
+            id: to_email_address
+            hint_text: "Na jaki adres"
+            font_size: 15
+            color_mode: "custom"
+            line_color_normal: 1, 0, 0, 1
+            line_color_focus: 1, 0, 0, 1
+            current_hint_text_color: 1,0,0,1
+            halign: 'center'
+            md_bg_color: 0.8, 0.489, 0.598, 1
+
+
         MDGridLayout:
             cols: 2
-
-            MDLabel:
-                id: fill_form
-                text: "CO TO JEST"
-                color: 0.24, 0.3, 1, 1
-                halign: 'center'
-                md_bg_color: 0.498, 0.789, 0.898, 1
-
-            MDLabel:
-                id: fill_form
-                text: "druga kolumna"
-                color: 0.57, 0.12, 1, 1
-                halign: 'center'
-                md_bg_color: 0.8, 0.489, 0.598, 1
-
-            MDLabel:
-                id: fill_form
-                text: "drugi wiersz"
-                color: 0.24, 0.3, 1, 1
-                halign: 'center'
-                md_bg_color: 0.198, 0.729, 0.458, 1
-
-            MDLabel:
-                id: fill_form
-                text: "druga kolumna"
-                color: 0.57, 0.12, 1, 1
-                halign: 'center'
-                md_bg_color: 0.128, 0.129, 0.888, 1
 
             MDBoxLayout:
                 orientation: 'horizontal'
@@ -84,14 +78,10 @@
                     md_bg_color: [0,1,0,1]
                     size_hint_x: 1
                     pos_hint: {'center_x': 0.5}
+                    on_press: root.save_email_details()
 
                 MDBoxLayout:
                     size_hint_x: 0.05
-
-
-
-
-
 
 
         MDBoxLayout:

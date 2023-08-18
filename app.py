@@ -1,7 +1,8 @@
 from kivymd.app import MDApp
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import ScreenManager
-from kivymd.uix.button import MDRoundFlatButton
+from libs.baseclass.settings_screen import SettingsScreen
+
 
 class WindowManager(ScreenManager):
     pass
