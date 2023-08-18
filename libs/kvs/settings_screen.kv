@@ -19,9 +19,11 @@
         MDTextField:
             id: from_email_address
             hint_text: "Z jakiego adresu wysłać wiadomość"
-            color: 0.57, 0.12, 1, 1
             halign: 'center'
-            md_bg_color: 0.8, 0.489, 0.598, 1
+            validator: 'email'
+            required: True
+            helper_text_mode: "on_error"
+            helper_text: "Niepoprawny adres email"
 
         MDTextField:
             id: to_email_address
@@ -32,7 +34,10 @@
             line_color_focus: 1, 0, 0, 1
             current_hint_text_color: 1,0,0,1
             halign: 'center'
-            md_bg_color: 0.8, 0.489, 0.598, 1
+            validator: 'email'
+            required: True
+            helper_text_mode: "on_error"
+            helper_text: "Niepoprawny adres email"
 
 
         MDGridLayout:
@@ -79,6 +84,7 @@
                     size_hint_x: 1
                     pos_hint: {'center_x': 0.5}
                     on_press: root.save_email_details()
+
 
                 MDBoxLayout:
                     size_hint_x: 0.05
