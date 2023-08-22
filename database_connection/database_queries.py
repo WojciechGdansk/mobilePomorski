@@ -41,7 +41,7 @@ class QueriesToDB:
             except OperationalError:
                 return False
             data = cursor.fetchone()
-            # there is always only one record in DB
+            # there is always no more than one record in DB
         return data
 
     def update_db(self):
