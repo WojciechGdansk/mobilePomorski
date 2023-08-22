@@ -1,6 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from kivymd.app import MDApp
 from email_validator import validate_email, EmailNotValidError
+from database_connection.database_queries import QueriesToDB
 
 
 class SettingsScreen(Screen):
@@ -9,12 +10,16 @@ class SettingsScreen(Screen):
         self.pre_load()
 
     def pre_load(self):
-        self.ids.from_email_address.text = "aaa@op.pl"
+        emails_in_db = QueriesToDB.load_from_db()
+        if emails_in_db:
+            sender, receiver = emails_in_db
+            self.ids.from_email_address.text = sender
+            self.ids.to_email_address.text = receiver
 
     def save_email_details(self):
         from_email_text = self.ids.from_email_address.text
         to_email_text = self.ids.to_email_address.text
-        print("To Email Address:", to_email_text + " " + from_email_text)
+        QueriesToDB(from_email_text, to_email_text).save_to_db()
         if self.email_validator(from_email_text, to_email_text):
             MDApp.get_running_app().root.current = "StartScreen"
 
