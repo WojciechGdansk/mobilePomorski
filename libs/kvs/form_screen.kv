@@ -1,0 +1,31 @@
+<FormScreen>
+
+    name: "FormScreen"
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        md_bg_color: 0.23, 0.5213, 0.9895, 1
+        spacing: 20
+        size: root.width, root.height
+
+        GridLayout:
+            cols: 2
+
+            Label:
+                text: "IV Liga"
+                id: fourth_league
+
+
+            MDCheckbox:
+                group: 'league'
+                on_active: root.checkboxes(fourth_league.text, *args)
+
+            Label:
+                text: 'Klasa Okręgowa'
+                id: regional_league
+
+
+            MDCheckbox:
+                group: 'league'
+                on_active: root.checkboxes(regional_league.text, *args)
