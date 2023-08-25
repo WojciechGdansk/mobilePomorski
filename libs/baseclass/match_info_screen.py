@@ -8,12 +8,6 @@ import re
 class MatchInfoScreen(Screen):
     match_details = MatchInfo()
 
-    def on_pre_enter(self, *args):
-        app = MDApp.get_running_app()
-        if hasattr(app, "selected_league"):
-            self.match_details.league = app.selected_league
-            del app.selected_league
-
     def show_date_picker(self):
         date_dialog = MDDatePicker()
         date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
@@ -59,8 +53,11 @@ class MatchInfoScreen(Screen):
         self.save_match_details_to_storage(home_team, away_team, chosen_date)
 
     def save_match_details_to_storage(self, home_team, away_team, date):
+        app = MDApp.get_running_app()
+        if hasattr(app, "selected_league"):
+            self.match_details.league = app.selected_league
+            del app.selected_league
         self.match_details.home_team = home_team
         self.match_details.away_team = away_team
         self.match_details.date = date
-        app = MDApp.get_running_app()
         app.match_details = self.match_details
