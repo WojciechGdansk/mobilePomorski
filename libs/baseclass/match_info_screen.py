@@ -61,3 +61,7 @@ class MatchInfoScreen(Screen):
         self.match_details.away_team = away_team
         self.match_details.date = date
         app.match_details = self.match_details
+        if self.match_details.league == "IV Liga":
+            app.root.current = "FourthLeagueForm"
+        if self.match_details.league == "Klasa Okręgowa":
+            app.root.current = "RegionalLeagueForm"
