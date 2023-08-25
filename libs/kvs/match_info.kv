@@ -1,0 +1,61 @@
+<MatchInfoScreen>
+
+    name: "MatchInfoScreen"
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        md_bg_color: 0.23, 0.5213, 0.9895, 1
+        spacing: 20
+        size: root.width, root.height
+
+        MDBoxLayout:
+            size_hint_y: 0.4
+            md_bg_color: [0.89,0.12,0.545,1]
+
+        MDTextField:
+            id: home_team
+            hint_text: "Gospodarze"
+            halign: 'center'
+            required: True
+            helper_text_mode: "on_error"
+            helper_text: "Wymagane"
+
+        MDTextField:
+            id: away_team
+            hint_text: "Goście"
+            halign: 'center'
+            required: True
+            helper_text_mode: "on_error"
+            helper_text: "Wymagane"
+
+
+        MDGridLayout:
+            cols: 2
+            adaptive_height: True
+
+            MDRaisedButton:
+                text: "Wybierz datę"
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                on_release: root.show_date_picker()
+
+            MDLabel:
+                id: selected_date
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                md_bg_color: [0.77,0.52,0.545,1]
+
+
+        MDRoundFlatButton:
+            id: save_details
+            text: "Dalej"
+            text_color: "white"
+            md_bg_color: [0,1,0,1]
+            size_hint_x: 1
+            pos_hint: {'center_x': 0.5}
+            on_press: root.save_data()
+
+
+
+        MDBoxLayout:
+            size_hint_y: 0.4
+            md_bg_color: [0.89,0.12,0.545,1]
