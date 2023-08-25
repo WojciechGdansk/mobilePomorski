@@ -1,18 +1,38 @@
 class MatchInfo:
     def __init__(self):
-        self.league = None
-        self.date = None
-        self.home_team = None
-        self.away_team = None
+        self._league = None
+        self._date = None
+        self._home_team = None
+        self._away_team = None
 
-    def set_league(self, league):
-        self.league = league
+    @property
+    def league(self):
+        return self._league
 
-    def set_date(self, date):
-        self.date = date
+    @league.setter
+    def league(self, league):
+        self._league = league
 
-    def set_home_team(self, home_team):
-        self.home_team = home_team
+    @property
+    def date(self):
+        return self._date
 
-    def set_away_team(self, away_team):
-        self.away_team = away_team
+    @date.setter
+    def date(self, date):
+        self._date = date
+
+    @property
+    def home_team(self):
+        return self._home_team
+
+    @home_team.setter
+    def home_team(self, home_team):
+        self._home_team = home_team
+
+    @property
+    def away_team(self):
+        return self._away_team
+
+    @away_team.setter
+    def away_team(self, away_team):
+        self._away_team = away_team

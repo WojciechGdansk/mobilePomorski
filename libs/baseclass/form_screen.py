@@ -3,9 +3,9 @@ from kivymd.app import MDApp
 
 
 class FormScreen(Screen):
-    def checkboxes(self, label_text, checkbox, value):
+    def checkboxes(self, league, checkbox, value):
         if value:
-            print(label_text)
-            print('*****')
-            print(value)
-            MDApp.get_running_app().root.current = "MatchInfoScreen"
+            app = MDApp.get_running_app()
+            app.selected_league = league  # save selected league to storage
+            app.root.current = "MatchInfoScreen"
+
