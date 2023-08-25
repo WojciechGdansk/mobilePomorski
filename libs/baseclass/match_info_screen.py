@@ -30,7 +30,6 @@ class MatchInfoScreen(Screen):
         :type date_range: <class 'list'>;
         '''
 
-        print(str(value))
         self.ids.selected_date.text = str(value)
 
     def on_cancel(self, instance, value):
