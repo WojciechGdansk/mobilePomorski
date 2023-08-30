@@ -51,17 +51,20 @@ class MatchInfoScreen(Screen):
             return False
 
         self.save_match_details_to_storage(home_team, away_team, chosen_date)
+        self.select_next_screen()
 
     def save_match_details_to_storage(self, home_team, away_team, date):
+        self.match_details.home_team = home_team
+        self.match_details.away_team = away_team
+        self.match_details.date = date
+
+    def select_next_screen(self):
         app = MDApp.get_running_app()
         if hasattr(app, "selected_league"):
             self.match_details.league = app.selected_league
             del app.selected_league
-        self.match_details.home_team = home_team
-        self.match_details.away_team = away_team
-        self.match_details.date = date
         app.match_details = self.match_details
         if self.match_details.league == "IV Liga":
-            app.root.current = "FourthLeagueForm"
+            app.root.current = "FourthLeagueScreen"
         if self.match_details.league == "Klasa Okręgowa":
-            app.root.current = "RegionalLeagueForm"
+            app.root.current = "RegionalLeagueScreen"
