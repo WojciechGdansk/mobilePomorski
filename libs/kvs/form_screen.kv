@@ -5,16 +5,27 @@
     MDBoxLayout:
         orientation: 'vertical'
         padding: 20
-        md_bg_color: 0.23, 0.5213, 0.9895, 1
+        md_bg_color: [190/255,32/255,19/255,1]
         spacing: 20
         size: root.width, root.height
+
+        MDBoxLayout:
+            size_hint_y: 0.2
+            Label:
+                text: "Pomorski Związek Piłki Nożnej"
+                font_size: 40
+                text_size: self.width, None
+                halign: 'center'
 
         GridLayout:
             cols: 2
 
             Label:
                 text: "IV Liga"
+                font_size: 30
                 id: fourth_league
+                text_size: self.width, None
+                halign: 'center'
 
 
             MDCheckbox:
@@ -23,9 +34,21 @@
 
             Label:
                 text: 'Klasa Okręgowa'
+                font_size: 30
                 id: regional_league
+                text_size: self.width, None
+                halign: 'center'
 
 
             MDCheckbox:
                 group: 'league'
                 on_active: root.checkboxes(regional_league.text, *args)
+
+        MDRoundFlatButton:
+            id: move_back
+            text: "Wstecz"
+            text_color: "black"
+            md_bg_color: [252/255,232/255,5/255,1]
+            size_hint_x: 0.5
+            pos_hint: {'center_x': 0.5}
+            on_press: root.manager.current = "StartScreen"

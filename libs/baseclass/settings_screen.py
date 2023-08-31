@@ -20,14 +20,19 @@ class SettingsScreen(Screen):
         from_email_text = self.ids.from_email_address.text
         to_email_text = self.ids.to_email_address.text
         QueriesToDB(from_email_text, to_email_text).save_to_db()
-        if self.email_validator(from_email_text, to_email_text):
+        if self.email_validator(from_email_text) and self.email_validator(to_email_text):
             MDApp.get_running_app().root.current = "StartScreen"
+        if not self.email_validator(from_email_text):
+            self.ids.from_email_address.error = True
+            self.ids.from_email_address.helper_text = "Niepoprawny adres email"
+        if not self.email_validator(to_email_text):
+            self.ids.to_email_address.error = True
+            self.ids.to_email_address.helper_text = "Niepoprawny adres email"
 
     @staticmethod
-    def email_validator(sender_email_address, received_email_address):
+    def email_validator(sender_email_address):
         try:
             validate_email(sender_email_address)
-            validate_email(received_email_address)
             return True
         except EmailNotValidError:
             return False

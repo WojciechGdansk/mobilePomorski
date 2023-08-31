@@ -5,13 +5,13 @@
     MDBoxLayout:
         orientation: 'vertical'
         padding: 20
-        md_bg_color: 0.23, 0.5213, 0.9895, 1
+        md_bg_color: [190/255,32/255,19/255,0.2]
         spacing: 20
         size: root.width, root.height
 
         MDBoxLayout:
-            size_hint_y: 0.4
-            md_bg_color: [0.89,0.12,0.545,1]
+            Image:
+                source: 'media/pom.png'
 
         MDTextField:
             id: home_team
@@ -31,29 +31,35 @@
 
 
         MDGridLayout:
-            cols: 2
+            cols: 3
             adaptive_height: True
 
-            MDRaisedButton:
+            MDRoundFlatButton:
                 text: "Wybierz datę"
                 pos_hint: {'center_x': .5, 'center_y': .5}
                 on_release: root.show_date_picker()
+                text_color: "black"
+                md_bg_color: [252/255,232/255,5/255,1]
+
+            MDBoxLayout:
+                size_hint_x: 0.05
 
             MDTextField:
                 id: selected_date
-                pos_hint: {'center_x': .5, 'center_y': .5}
-                md_bg_color: [0.77,0.52,0.545,1]
+                #pos_hint: {'center_x': .5, 'center_y': .5}
+                size_hint_x: 0.5
                 error: False
                 required: True
                 helper_text_mode: "on_error"
                 helper_text: ""
 
 
+
         MDRoundFlatButton:
             id: save_details
             text: "Dalej"
-            text_color: "white"
-            md_bg_color: [0,1,0,1]
+            text_color: "black"
+            md_bg_color: [252/255,232/255,5/255,1]
             size_hint_x: 1
             pos_hint: {'center_x': 0.5}
             on_press: root.save_data()
@@ -62,4 +68,3 @@
 
         MDBoxLayout:
             size_hint_y: 0.4
-            md_bg_color: [0.89,0.12,0.545,1]

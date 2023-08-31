@@ -5,19 +5,24 @@
     MDBoxLayout:
         orientation: 'vertical'
         padding: 20
-        #md_bg_color: [0.255,0,0,1]
+        md_bg_color: [190/255,32/255,19/255,1]
         spacing: 20
         size: root.width, root.height
 
         MDBoxLayout:
             size_hint_y: 0.2
+            Label:
+                text: "Pomorski Związek Piłki Nożnej"
+                font_size: 40
+                text_size: self.width, None
+                halign: 'center'
 
 
         MDRoundFlatButton:
             id: fill_form
             text: "Wypełnij formularz"
-            text_color: "white"
-            md_bg_color: [0,1,0,1]
+            text_color: "black"
+            md_bg_color: [252/255,232/255,5/255,1]
             size_hint_x: 1
             pos_hint: {'center_x': 0.5}
             on_press: root.manager.current = "FormScreen"
@@ -26,8 +31,8 @@
             id: settings
             text: "Ustawienia"
             on_press: root.manager.current = "SettingsScreen"
-            text_color: "white"
-            md_bg_color: [0,1,0,1]
+            text_color: "black"
+            md_bg_color: [252/255,232/255,5/255,1]
             size_hint_x: 1
             pos_hint: {'center_x': 0.5}
 
@@ -35,8 +40,8 @@
             id: quit
             text: "Wyjście"
             on_press: app.exit_func()
-            text_color: "white"
-            md_bg_color: [0,1,0,1]
+            text_color: "black"
+            md_bg_color: [252/255,232/255,5/255,1]
             size_hint_x: 1
             pos_hint: {'center_x': 0.5}
 

@@ -37,21 +37,29 @@ class MatchInfoScreen(Screen):
         home_team = home_team.strip()
         away_team = self.ids.away_team.text
         away_team = away_team.strip()
+        if self.validate_input(chosen_date, home_team, away_team):
+            self.save_match_details_to_storage(home_team, away_team, chosen_date)
+            self.select_next_screen()
+
+    def validate_input(self, chosen_date, home_team, away_team):
+        input_valid = True
+        pattern = "([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))"
         if not re.match(pattern, chosen_date):
             self.ids.selected_date.error = True
             self.ids.selected_date.helper_text = "Nieprawidłowa data"
-            return False
+            input_valid = False
         if not home_team:
             self.ids.home_team.text = home_team
             self.ids.home_team.helper_text = "Nieprawidłowa drużyna"
-            return False
+            input_valid = False
         if not away_team:
             self.ids.away_team.text = away_team
             self.ids.away_team.helper_text = "Nieprawidłowa drużyna"
+            input_valid = False
+        if input_valid:
+            return True
+        else:
             return False
-
-        self.save_match_details_to_storage(home_team, away_team, chosen_date)
-        self.select_next_screen()
 
     def save_match_details_to_storage(self, home_team, away_team, date):
         self.match_details.home_team = home_team
