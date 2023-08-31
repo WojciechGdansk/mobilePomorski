@@ -1,7 +1,7 @@
 from kivymd.app import MDApp
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import ScreenManager
-
+from kivymd.uix.selectioncontrol.selectioncontrol import MDCheckbox
 
 class WindowManager(ScreenManager):
     pass

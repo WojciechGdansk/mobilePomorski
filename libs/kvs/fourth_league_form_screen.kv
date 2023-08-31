@@ -5,6 +5,94 @@
     MDBoxLayout:
         orientation: 'vertical'
         padding: 20
-        md_bg_color: [190/255,32/255,19/255,1]
         spacing: 20
         size: root.width, root.height
+
+        MDBoxLayout:
+            Image:
+                source: 'media/pom.png'
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+            md_bg_color: 0,1,0,1
+            adaptive_height: True
+
+            MDLabel:
+                text: ""
+                md_bg_color: 0,0,1,1
+
+            MDLabel:
+                text: "Tak"
+                halign: 'center'
+                size_hint_x: 0.2
+                md_bg_color: 0,0.5,0.5,1
+            MDLabel:
+                halign: 'center'
+                text: "Nie"
+                size_hint_x: 0.2
+                md_bg_color: 0.5,0.2,0.3,1
+
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+
+            MDLabel:
+                text: "Wydzielony parking dla oficjeli meczowych"
+                id: parking
+                text_size: self.width, None
+                halign: 'center'
+
+            MDCheckbox:
+                group: 'parking'
+                on_active: root.checkboxes(True, *args)
+                size_hint_x: 0.2
+
+            MDCheckbox:
+                group: 'parking'
+                on_active: root.checkboxes(False, *args)
+                size_hint_x: 0.2
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+
+            MDLabel:
+                text: "Regulamin meczu niebędącego imprezą masową"
+                id: statute
+                text_size: self.width, None
+                halign: 'center'
+
+            MDCheckbox:
+                group: 'statute'
+                id: statute_yes
+                on_active: root.checkboxes(True, *args)
+                size_hint_x: 0.2
+
+
+            MDCheckbox:
+                group: 'statute'
+                id: statute_no
+                on_active: root.checkboxes(False, *args)
+                size_hint_x: 0.2
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+
+            MDLabel:
+                text: "Protokół weryfikacji boiska"
+                id: field_verified_document
+                text_size: self.width, None
+                halign: 'center'
+
+            MDCheckbox:
+                group: 'field_verified_document'
+                on_active: root.checkboxes(True, *args)
+                size_hint_x: 0.2
+
+
+            MDCheckbox:
+                group: 'field_verified_document'
+                on_active: root.checkboxes(False, *args)
+                size_hint_x: 0.2
+
+
+

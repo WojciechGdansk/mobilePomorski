@@ -5,17 +5,13 @@
     MDBoxLayout:
         orientation: 'vertical'
         padding: 20
-        md_bg_color: [190/255,32/255,19/255,1]
         spacing: 20
         size: root.width, root.height
 
         MDBoxLayout:
             size_hint_y: 0.2
-            Label:
-                text: "Pomorski Związek Piłki Nożnej"
-                font_size: 40
-                text_size: self.width, None
-                halign: 'center'
+            Image:
+                source: "media/pom.png"
 
 
         MDRoundFlatButton:
@@ -25,7 +21,7 @@
             md_bg_color: [252/255,232/255,5/255,1]
             size_hint_x: 1
             pos_hint: {'center_x': 0.5}
-            on_press: root.manager.current = "FormScreen"
+            on_press: root.manager.current = "RegionalLeagueScreen"
 
         MDRoundFlatButton:
             id: settings

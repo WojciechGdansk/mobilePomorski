@@ -1,3 +1,6 @@
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+
 <RegionalLeagueScreen>
 
     name: "RegionalLeagueScreen"
@@ -5,7 +8,15 @@
     MDBoxLayout:
         orientation: 'vertical'
         padding: 20
-        md_bg_color: [190/255,32/255,19/255,1]
         spacing: 20
         size: root.width, root.height
 
+    MDRaisedButton:
+        text: "Some text"
+        pos_hint: {"center_x": .5, "center_y": 0.5}
+        on_parent:
+            for item in root.dupa:\
+            box = MDBoxLayout(orientation="horizontal")
+            label = MDLabel(text=item)
+            box.add_widget(label)
+            self.add_widget(box)

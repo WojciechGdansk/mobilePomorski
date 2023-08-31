@@ -2,4 +2,4 @@ from kivy.uix.screenmanager import Screen
 
 
 class RegionalLeagueScreen(Screen):
-    pass
+    dupa = ['adam', 'karol', 'janusz', 'milosz', 'kds', 'sdsda']
