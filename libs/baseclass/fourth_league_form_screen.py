@@ -1,16 +1,23 @@
 from kivy.uix.screenmanager import Screen
-from kivy.properties import DictProperty
+from kivymd.uix.textfield import MDTextField
 
 
 class FourthLeagueScreen(Screen):
-    questions_dict = DictProperty({
-        "Wydzielony parking dla oficjeli meczowych": "parking",
-        "Regulamin meczu niebędącego imprezą masową": "statute",
-        "Protokół weryfikacji boiska": "field_verified_document",
-        # Add more labels and groups as needed
-    })
-    dupa =["adam", "karol"]
+    extra_text = ''
+    text_field = ''
     def checkboxes(self, answer, checkbox, value):
         if value:
             print(checkbox.group)
             print(answer)
+            if checkbox.group == "other_remarks" and answer:
+                print('dodatkowe')
+                self.text_field = MDTextField(multiline=True, id="created_remarks", text=self.extra_text)
+                self.ids.main_box.add_widget(self.text_field)
+            if checkbox.group == 'other_remarks' and not answer:
+                try:
+                    self.extra_text = self.ids.created_remarks.text
+                    print(self.extra_text)
+                    self.ids.main_box.remove_widget(self.text_field)
+                except AttributeError:
+                    pass
+

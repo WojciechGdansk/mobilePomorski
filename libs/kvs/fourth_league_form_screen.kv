@@ -2,97 +2,280 @@
 
     name: "FourthLeagueScreen"
 
-    MDBoxLayout:
-        orientation: 'vertical'
-        padding: 20
-        spacing: 20
-        size: root.width, root.height
-
-        MDBoxLayout:
-            Image:
-                source: 'media/pom.png'
-
-        MDBoxLayout:
-            orientation: 'horizontal'
-            md_bg_color: 0,1,0,1
-            adaptive_height: True
-
-            MDLabel:
-                text: ""
-                md_bg_color: 0,0,1,1
-
-            MDLabel:
-                text: "Tak"
-                halign: 'center'
-                size_hint_x: 0.2
-                md_bg_color: 0,0.5,0.5,1
-            MDLabel:
-                halign: 'center'
-                text: "Nie"
-                size_hint_x: 0.2
-                md_bg_color: 0.5,0.2,0.3,1
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint: (1,1)
 
 
         MDBoxLayout:
-            orientation: 'horizontal'
-
-            MDLabel:
-                text: "Wydzielony parking dla oficjeli meczowych"
-                id: parking
-                text_size: self.width, None
-                halign: 'center'
-
-            MDCheckbox:
-                group: 'parking'
-                on_active: root.checkboxes(True, *args)
-                size_hint_x: 0.2
-
-            MDCheckbox:
-                group: 'parking'
-                on_active: root.checkboxes(False, *args)
-                size_hint_x: 0.2
-
-        MDBoxLayout:
-            orientation: 'horizontal'
-
-            MDLabel:
-                text: "Regulamin meczu niebędącego imprezą masową"
-                id: statute
-                text_size: self.width, None
-                halign: 'center'
-
-            MDCheckbox:
-                group: 'statute'
-                id: statute_yes
-                on_active: root.checkboxes(True, *args)
-                size_hint_x: 0.2
+            id: main_box
+            orientation: 'vertical'
+            padding: 20
+            spacing: 20
+            size_hint_y: None
+            height: 1000
 
 
-            MDCheckbox:
-                group: 'statute'
-                id: statute_no
-                on_active: root.checkboxes(False, *args)
-                size_hint_x: 0.2
+            MDBoxLayout:
+                Image:
+                    source: 'media/pom.png'
 
-        MDBoxLayout:
-            orientation: 'horizontal'
+            MDBoxLayout:
+                orientation: 'horizontal'
+                adaptive_height: True
+                size_hint_y: 0.2
 
-            MDLabel:
-                text: "Protokół weryfikacji boiska"
-                id: field_verified_document
-                text_size: self.width, None
-                halign: 'center'
+                MDLabel:
+                    text: ""
 
-            MDCheckbox:
-                group: 'field_verified_document'
-                on_active: root.checkboxes(True, *args)
-                size_hint_x: 0.2
-
-
-            MDCheckbox:
-                group: 'field_verified_document'
-                on_active: root.checkboxes(False, *args)
-                size_hint_x: 0.2
+                MDLabel:
+                    text: "Tak"
+                    halign: 'center'
+                    size_hint_x: 0.2
+                MDLabel:
+                    halign: 'center'
+                    text: "Nie"
+                    size_hint_x: 0.2
 
 
+            MDBoxLayout:
+                orientation: 'horizontal'
 
+                MDLabel:
+                    text: "Wydzielony parking dla oficjeli meczowych"
+                    id: parking
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'parking'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+                MDCheckbox:
+                    group: 'parking'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Regulamin meczu niebędącego imprezą masową"
+                    id: statute
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'statute'
+                    id: statute_yes
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'statute'
+                    id: statute_no
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Protokół weryfikacji boiska"
+                    id: field_verified_document
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'field_verified_document'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'field_verified_document'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Informacja organizatora zawodów"
+                    id: match_info_protocol
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'match_info_protocol'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'match_info_protocol'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Kierownik ds. bezpieczeństwa"
+                    id: security_director
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'security_director'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'security_director'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Spiker"
+                    id: announcer
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'announcer'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'announcer'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Służby porządkowo-informacyjne"
+                    id: support_services
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'support_services'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'support_services'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Oznakowany punkt medyczny"
+                    id: medical_point
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'medical_point'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'medical_point'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Nosze i noszowi"
+                    id: stretcher
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'stretcher'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'stretcher'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Ogrodzenie obszaru pola gry od widowni"
+                    id: field_fenced
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'field_fenced'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'field_fenced'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Zabezpieczone przejście do obszaru pola gry"
+                    id: secured_passage
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'secured_passage'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'secured_passage'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Inne uwagi"
+                    id: other_remarks
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'other_remarks'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'other_remarks'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2

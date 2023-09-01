@@ -5,17 +5,240 @@
 
     name: "RegionalLeagueScreen"
 
-    MDBoxLayout:
-        orientation: 'vertical'
-        id: box1
-        padding: 20
-        spacing: 20
-        size: root.width, root.height
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint: (1,1)
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: 1000
+            orientation: 'vertical'
+            padding: 20
+            spacing: 20
 
 
-        on_parent:
-            for key, value in root.kupa.items():\
-            box1.add_widget(MDBoxLayout(orientation="horizontal", md_bg_color=key, size_hint_x= 0.2, id=value))
+            MDBoxLayout:
+                Image:
+                    source: 'media/pom.png'
 
 
+            MDBoxLayout:
+                orientation: 'horizontal'
+                adaptive_height: True
+                size_hint_y: 0.2
 
+                MDLabel:
+                    text: ""
+
+                MDLabel:
+                    text: "Tak"
+                    halign: 'center'
+                    size_hint_x: 0.2
+                MDLabel:
+                    halign: 'center'
+                    text: "Nie"
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Wydzielony parking dla oficjeli meczowych"
+                    id: parking
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'parking'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+                MDCheckbox:
+                    group: 'parking'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Regulamin meczu niebędącego imprezą masową"
+                    id: statute
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'statute'
+                    id: statute_yes
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'statute'
+                    id: statute_no
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Protokół weryfikacji boiska"
+                    id: field_verified_document
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'field_verified_document'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'field_verified_document'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Informacja organizatora zawodów"
+                    id: match_info_protocol
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'match_info_protocol'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'match_info_protocol'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Koordynator służb klubowych"
+                    id: club_coordinator
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'club_coordinator'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'club_coordinator'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Służby porządkowo-informacyjne"
+                    id: support_services
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'support_services'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'support_services'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Oznakowany punkt medyczny"
+                    id: medical_point
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'medical_point'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'medical_point'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Nosze i noszowi"
+                    id: stretcher
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'stretcher'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'stretcher'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Ogrodzenie obszaru pola gry od widowni"
+                    id: field_fenced
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'field_fenced'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'field_fenced'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDLabel:
+                    text: "Zabezpieczone przejście do obszaru pola gry"
+                    id: secured_passage
+                    text_size: self.width, None
+                    halign: 'center'
+
+                MDCheckbox:
+                    group: 'secured_passage'
+                    on_active: root.checkboxes(True, *args)
+                    size_hint_x: 0.2
+
+
+                MDCheckbox:
+                    group: 'secured_passage'
+                    on_active: root.checkboxes(False, *args)
+                    size_hint_x: 0.2
