@@ -5,6 +5,7 @@ from kivymd.uix.textfield import MDTextField
 class FourthLeagueScreen(Screen):
     extra_text = ''
     text_field = ''
+
     def checkboxes(self, answer, checkbox, value):
         if value:
             print(checkbox.group)
@@ -18,4 +19,3 @@ class FourthLeagueScreen(Screen):
                     self.ids.main_box.remove_widget(self.text_field)
                 except AttributeError:
                     pass
-
