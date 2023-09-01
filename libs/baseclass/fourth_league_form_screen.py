@@ -10,13 +10,11 @@ class FourthLeagueScreen(Screen):
             print(checkbox.group)
             print(answer)
             if checkbox.group == "other_remarks" and answer:
-                print('dodatkowe')
                 self.text_field = MDTextField(multiline=True, id="created_remarks", text=self.extra_text)
                 self.ids.main_box.add_widget(self.text_field)
             if checkbox.group == 'other_remarks' and not answer:
                 try:
-                    self.extra_text = self.ids.created_remarks.text
-                    print(self.extra_text)
+                    self.extra_text = self.text_field.text
                     self.ids.main_box.remove_widget(self.text_field)
                 except AttributeError:
                     pass
