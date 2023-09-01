@@ -1,15 +1,21 @@
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.textfield import MDTextField
-
+from form_data.form_info import RegionalLeague
 
 class RegionalLeagueScreen(Screen):
     extra_text = ''
     text_field = ''
+    form = RegionalLeague()
 
     def checkboxes(self, answer, checkbox, value):
         if value:
             print(checkbox.group)
             print(answer)
+            if checkbox.group == 'parking':
+                self.form.parking = answer
+            if checkbox.group == 'statute':
+                self.form.statute = answer
+
             if checkbox.group == "other_remarks" and answer:
                 self.text_field = MDTextField(multiline=True, id="created_remarks", text=self.extra_text)
                 self.ids.main_box.add_widget(self.text_field)
