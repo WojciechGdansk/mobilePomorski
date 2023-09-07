@@ -280,3 +280,45 @@
                     on_active: root.checkboxes(False, *args)
                     size_hint_x: 0.2
 
+            MDGridLayout:
+                cols: 2
+
+                MDBoxLayout:
+                    orientation: 'horizontal'
+
+                    MDBoxLayout:
+                        size_hint_x: 0.05
+
+
+                    MDRoundFlatButton:
+                        id: move_back
+                        text: "Wstecz"
+                        text_color: "black"
+                        md_bg_color: [252/255,232/255,5/255,1]
+                        size_hint_x: 1
+                        pos_hint: {'center_x': 0.5}
+                        on_press: root.manager.current = "StartScreen"
+
+                    MDBoxLayout:
+                        size_hint_x: 0.05
+
+
+                MDBoxLayout:
+                    orientation: 'horizontal'
+
+                    MDBoxLayout:
+                        size_hint_x: 0.05
+
+
+                    MDRoundFlatButton:
+                        id: save_details
+                        text: "Zapisz"
+                        text_color: "black"
+                        md_bg_color: [252/255,232/255,5/255,1]
+                        size_hint_x: 1
+                        pos_hint: {'center_x': 0.5}
+                        on_press: root.save_details()
+
+
+                    MDBoxLayout:
+                        size_hint_x: 0.05
