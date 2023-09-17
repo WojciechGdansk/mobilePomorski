@@ -322,3 +322,20 @@
 
                     MDBoxLayout:
                         size_hint_x: 0.05
+
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+
+                MDBoxLayout:
+                    size_hint_x: 0.05
+
+                Label:
+                    id: missing_fields
+                    text_size: self.width, None
+                    color: (1,0,0,1)
+                    size_hint_x: 1
+                    pos_hint: {'center_x': 0.5}
+
+                MDBoxLayout:
+                    size_hint_x: 0.05
