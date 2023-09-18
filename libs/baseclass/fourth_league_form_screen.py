@@ -1,7 +1,4 @@
-from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
-from kivymd.uix.card import MDCard
-from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextField
 from form_data.form_info import FourthLeague
 
@@ -71,11 +68,11 @@ class FourthLeagueScreen(Screen):
             self.form.other_remarks = False
         else:
             self.form.other_remarks = None
-        if not self.check_all_fields_are_checked():
+        if not self.all_fields_selected():
             self.erase_missing_fields_field()
             self.display_not_selected_fields()
 
-    def check_all_fields_are_checked(self):
+    def all_fields_selected(self):
         all_fields_except_other_remarks_selected = all(self.form.__getattribute__(attr) is not None
                                                        for attr in self.forth_league_attr)
         if self.other_remarks_selected and all_fields_except_other_remarks_selected:
