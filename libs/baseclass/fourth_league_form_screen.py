@@ -29,7 +29,7 @@ class FourthLeagueScreen(Screen):
     }
 
     other_remarks_to_add = None  # check if there is text to add as other_remarks
-    other_remarks_selected = None  # check if other_remarks checkbox is selected
+    other_remarks_selected = False  # check if other_remarks checkbox is selected
 
     def checkboxes(self, user_answer, checkbox, value):
         if value:
@@ -47,7 +47,7 @@ class FourthLeagueScreen(Screen):
                 self.remove_other_remarks_input()
 
         if not value and checkbox.group == 'other_remarks':
-            self.other_remarks_selected = None
+            self.other_remarks_selected = False
             self.remove_other_remarks_input()
 
         if not value and checkbox.group in self.forth_league_attr:
@@ -67,40 +67,42 @@ class FourthLeagueScreen(Screen):
     def save_details(self):
         if self.other_remarks_to_add:
             self.form.other_remarks = self.other_remarks_text_field.text
+        elif self.other_remarks_selected:
+            self.form.other_remarks = False
         else:
             self.form.other_remarks = None
-        self.check_all_fields_are_checked()
-        self.display_not_selected_fields()
+        if not self.check_all_fields_are_checked():
+            self.erase_missing_fields_field()
+            self.display_not_selected_fields()
 
     def check_all_fields_are_checked(self):
         all_fields_except_other_remarks_selected = all(self.form.__getattribute__(attr) is not None
                                                        for attr in self.forth_league_attr)
-        other_remarks_selected = self.other_remarks_selected is not None
-        if other_remarks_selected and all_fields_except_other_remarks_selected:
+        if self.other_remarks_selected and all_fields_except_other_remarks_selected:
             return True
         else:
             return False
 
     def get_not_selected_fields(self):
+        """return a list of fields which haven't been selected"""
         fields_not_selected = []
         for attr in self.forth_league_attr:
             if self.form.__getattribute__(attr) is None:
-                fields_not_selected.append(attr)
+                fields_not_selected.append(self.label_data[attr])
+        if self.form.other_remarks is None:
+            fields_not_selected.append(self.label_data['other_remarks'])
         return fields_not_selected
 
     def display_not_selected_fields(self):
-        card = MDCard(size_hint=(0.8, 0.5), pos_hint={'center_x': 0.5, 'center_y': 0.5}, orientation='vertical')
-        # card.add_widget(MDLabel(text="Nie zaznaczono pól:"))
-        dupa = []
-        for attr in self.forth_league_attr:
-            if self.form.__getattribute__(attr) is None:
-                dupa.append(self.label_data[attr])
+        """display at the bottom of screen not selected fields"""
+        list_of_fields = self.get_not_selected_fields()
+        if len(list_of_fields) > 0:
+            self.ids.missing_fields_layout.height = 15 * len(list_of_fields)
+            # for plural and singular version
+            text_to_print = "Nie zaznaczono pól: " + ", ".join(list_of_fields) \
+                if len(list_of_fields)> 1 else "Nie zaznaczono pola " + list_of_fields[0]
+            self.ids.missing_fields.text = text_to_print
 
-        text_to_print = ", ".join(dupa)
-        print(text_to_print)
-        missing_value = Label(text="Nie zaznaczono pól: "+text_to_print,
-                              font_size=10,
-                              color=(1,0,0,1),
-                              text_size=(self.width, None),  # Set text_size to (width, None)
-                              )
-        self.ids.missing_fields.text = text_to_print
+    def erase_missing_fields_field(self):
+        self.ids.missing_fields.text = ''
+        self.ids.missing_fields_layout.height = 0
