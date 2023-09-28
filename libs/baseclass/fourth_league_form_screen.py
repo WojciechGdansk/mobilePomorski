@@ -69,10 +69,12 @@ class FourthLeagueScreen(Screen):
         else:
             self.form.other_remarks = None
         if not self.all_fields_selected():
-            self.erase_missing_fields_field()
-            self.display_not_selected_fields()
+            return self.display_not_selected_fields()
+        self.erase_missing_fields_field()
+        print("wsyzstkie pola ok")
 
     def all_fields_selected(self):
+        """check if all required checkboxes are selected"""
         all_fields_except_other_remarks_selected = all(self.form.__getattribute__(attr) is not None
                                                        for attr in self.forth_league_attr)
         if self.other_remarks_selected and all_fields_except_other_remarks_selected:
@@ -92,14 +94,17 @@ class FourthLeagueScreen(Screen):
 
     def display_not_selected_fields(self):
         """display at the bottom of screen not selected fields"""
+        self.erase_missing_fields_field()
         list_of_fields = self.get_not_selected_fields()
         if len(list_of_fields) > 0:
-            self.ids.missing_fields_layout.height = 15 * len(list_of_fields)
+            # height of field related to width of screen
+            self.ids.missing_fields_layout.height = (len(list_of_fields) / self.width) * 6000
             # for plural and singular version
             text_to_print = "Nie zaznaczono pól: " + ", ".join(list_of_fields) \
-                if len(list_of_fields)> 1 else "Nie zaznaczono pola " + list_of_fields[0]
+                if len(list_of_fields) > 1 else "Nie zaznaczono pola " + list_of_fields[0]
             self.ids.missing_fields.text = text_to_print
 
     def erase_missing_fields_field(self):
+        """remove list of missing fields at the bottom of screen"""
         self.ids.missing_fields.text = ''
         self.ids.missing_fields_layout.height = 0
