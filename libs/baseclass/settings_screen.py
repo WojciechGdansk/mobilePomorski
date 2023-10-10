@@ -19,8 +19,12 @@ class SettingsScreen(Screen):
     def save_email_details(self):
         from_email_text = self.ids.from_email_address.text
         to_email_text = self.ids.to_email_address.text
-        QueriesToDB(from_email_text, to_email_text).save_to_db()
-        if self.email_validator(from_email_text) and self.email_validator(to_email_text):
+        user_name = self.ids.name_and_last_name.text
+        if self.email_validator(from_email_text) and self.email_validator(to_email_text) and \
+                self.user_name_validator(user_name):
+            # save to DB data provided by user in settings screen only if data are correct
+            QueriesToDB(from_email_text, to_email_text, user_name).save_to_db()
+            # when correct save to DB and go to start screen
             MDApp.get_running_app().root.current = "StartScreen"
         if not self.email_validator(from_email_text):
             self.ids.from_email_address.error = True
@@ -28,6 +32,9 @@ class SettingsScreen(Screen):
         if not self.email_validator(to_email_text):
             self.ids.to_email_address.error = True
             self.ids.to_email_address.helper_text = "Niepoprawny adres email"
+        if not self.user_name_validator(user_name):
+            self.ids.name_and_last_name.error = True
+            self.ids.name_and_last_name.helper_text = "Błędne imię i nazwisko, wymagane przynajmniej 5 znaków"
 
     @staticmethod
     def email_validator(sender_email_address):
@@ -35,4 +42,11 @@ class SettingsScreen(Screen):
             validate_email(sender_email_address)
             return True
         except EmailNotValidError:
+            return False
+
+    @staticmethod
+    def user_name_validator(user_name):
+        if len(user_name) > 4:
+            return True
+        else:
             return False

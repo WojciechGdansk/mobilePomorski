@@ -31,7 +31,6 @@ class MatchInfoScreen(Screen):
 
     def save_data(self):
         """chosen_date is taken from text input field. To text input field value is entered in on_save method"""
-        pattern = "([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))"
         chosen_date = self.ids.selected_date.text
         home_team = self.ids.home_team.text
         home_team = home_team.strip()
