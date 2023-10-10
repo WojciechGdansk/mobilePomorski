@@ -29,7 +29,7 @@ class QueriesToDB:
             self.update_db()
         else:
             query = f"""INSERT INTO saved_data (sender_email_address, receiver_mail_address, user_name) VALUES
-             ('{self.sender_email_address}', '{self.receiver_email_address}')"""
+             ('{self.sender_email_address}', '{self.receiver_email_address}', '{self.user_name}')"""
             self.connection(query)
 
     @staticmethod

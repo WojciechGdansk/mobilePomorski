@@ -12,9 +12,10 @@ class SettingsScreen(Screen):
     def pre_load(self):
         emails_in_db = QueriesToDB.load_from_db()
         if emails_in_db:
-            sender, receiver = emails_in_db
+            sender, receiver, user_name = emails_in_db
             self.ids.from_email_address.text = sender
             self.ids.to_email_address.text = receiver
+            self.ids.name_and_last_name.text = user_name
 
     def save_email_details(self):
         from_email_text = self.ids.from_email_address.text

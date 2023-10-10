@@ -1,12 +1,15 @@
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.textfield import MDTextField
+from kivymd.app import MDApp
 from form_data.form_info import FourthLeague
-
+from database_connection.database_queries import QueriesToDB
 
 class FourthLeagueScreen(Screen):
     text_after_activating_and_deactivating_field = ''
     other_remarks_text_field = ''
     form = FourthLeague()
+    match_info = None
+    user_name = None
     forth_league_attr = ['parking', 'statute', 'field_verified_document', 'match_info_protocol', 'security_director',
                          'announcer', 'support_services', 'medical_point', 'stretcher', 'field_fenced',
                          'secured_passage']
@@ -71,7 +74,13 @@ class FourthLeagueScreen(Screen):
         if not self.all_fields_selected():
             return self.display_not_selected_fields()
         self.erase_missing_fields_field()
-        print("wsyzstkie pola ok")
+        self.get_match_details()
+        # if settings correct set:
+        if self.get_details_from_db():
+            print("wsyzstkie pola ok")
+        else:
+            # screen with error- missing settings
+            print("Brakuje danych w ustawieniach")
 
     def all_fields_selected(self):
         """check if all required checkboxes are selected"""
@@ -108,3 +117,17 @@ class FourthLeagueScreen(Screen):
         """remove list of missing fields at the bottom of screen"""
         self.ids.missing_fields.text = ''
         self.ids.missing_fields_layout.height = 0
+
+    def get_match_details(self):
+        app = MDApp.get_running_app()
+        if hasattr(app, "match_details"):
+            self.match_info = app.match_details
+            del app.match_details
+
+    def get_details_from_db(self):
+        emails_in_db = QueriesToDB.load_from_db()
+        if emails_in_db:
+            sender, receiver, self.user_name = emails_in_db
+            return True
+        else:
+            return False
