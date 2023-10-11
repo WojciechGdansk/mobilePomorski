@@ -2,6 +2,7 @@ from kivy.uix.screenmanager import Screen
 from kivymd.uix.textfield import MDTextField
 from kivymd.app import MDApp
 from form_data.form_info import FourthLeague
+from word_creator.word_document_creator import CreateWord
 
 
 class FourthLeagueScreen(Screen):
@@ -77,6 +78,7 @@ class FourthLeagueScreen(Screen):
         # haven't been selected. When user click again Save button new created field should be erased
         self.erase_missing_fields_field()
         self.get_info_from_storage()
+        CreateWord(self.match_info, self.form, self.user_name).create_document()
 
     def all_fields_selected(self):
         """check if all required checkboxes are selected"""
