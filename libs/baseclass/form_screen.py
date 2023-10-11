@@ -8,4 +8,3 @@ class FormScreen(Screen):
             app = MDApp.get_running_app()
             app.selected_league = league  # save selected league to storage
             app.root.current = "MatchInfoScreen"
-

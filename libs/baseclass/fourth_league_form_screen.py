@@ -2,7 +2,7 @@ from kivy.uix.screenmanager import Screen
 from kivymd.uix.textfield import MDTextField
 from kivymd.app import MDApp
 from form_data.form_info import FourthLeague
-from database_connection.database_queries import QueriesToDB
+
 
 class FourthLeagueScreen(Screen):
     text_after_activating_and_deactivating_field = ''
@@ -65,22 +65,18 @@ class FourthLeagueScreen(Screen):
             self.other_remarks_to_add = False
 
     def save_details(self):
-        if self.other_remarks_to_add:
+        if self.other_remarks_to_add:  # if other_remarks field is selected and with text
             self.form.other_remarks = self.other_remarks_text_field.text
-        elif self.other_remarks_selected:
+        elif self.other_remarks_selected:  # if other_remarks field is selected but no extra text to add
             self.form.other_remarks = False
-        else:
+        else:  # if field other_remarks hasn't been selected at all
             self.form.other_remarks = None
         if not self.all_fields_selected():
             return self.display_not_selected_fields()
+        # in case when user previously click save button field is created at the bottom with info which fields
+        # haven't been selected. When user click again Save button new created field should be erased
         self.erase_missing_fields_field()
-        self.get_match_details()
-        # if settings correct set:
-        if self.get_details_from_db():
-            print("wsyzstkie pola ok")
-        else:
-            # screen with error- missing settings
-            print("Brakuje danych w ustawieniach")
+        self.get_info_from_storage()
 
     def all_fields_selected(self):
         """check if all required checkboxes are selected"""
@@ -118,16 +114,22 @@ class FourthLeagueScreen(Screen):
         self.ids.missing_fields.text = ''
         self.ids.missing_fields_layout.height = 0
 
-    def get_match_details(self):
-        app = MDApp.get_running_app()
+    def set_match_details(self, app: MDApp):
+        """get match details object saved in memory and set as object here
+        get user name from memory"""
         if hasattr(app, "match_details"):
             self.match_info = app.match_details
             del app.match_details
+        self.set_user_name(app)
 
-    def get_details_from_db(self):
-        emails_in_db = QueriesToDB.load_from_db()
-        if emails_in_db:
-            sender, receiver, self.user_name = emails_in_db
-            return True
-        else:
-            return False
+    def set_user_name(self, app: MDApp):
+        """get user name saved in memory and set as variable"""
+        if hasattr(app, 'user_name'):
+            self.user_name = app.user_name
+            del app.user_name
+
+    def get_info_from_storage(self):
+        """run methods to get necessary info from app memory"""
+        app = MDApp.get_running_app()
+        self.set_match_details(app)
+        self.set_user_name(app)
