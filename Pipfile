@@ -7,6 +7,7 @@ name = "pypi"
 kivymd = "*"
 email-validator = "*"
 python-docx = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

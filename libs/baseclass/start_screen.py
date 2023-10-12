@@ -13,6 +13,8 @@ class StartScreen(Screen):
         if emails_in_db:
             sender, receiver, user_name = emails_in_db
             app = MDApp.get_running_app()
+            app.sender = sender
+            app.receiver = receiver
             app.user_name = user_name
             app.root.current = "FormScreen"
         else:

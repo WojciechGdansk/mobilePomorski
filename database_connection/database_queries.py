@@ -47,5 +47,5 @@ class QueriesToDB:
 
     def update_db(self):
         query = f"""UPDATE saved_data SET sender_email_address='{self.sender_email_address}', 
-        receiver_mail_address='{self.receiver_email_address} user_name='{self.user_name}' WHERE ID=1"""
+        receiver_mail_address='{self.receiver_email_address}', user_name='{self.user_name}' WHERE ID=1"""
         self.connection(query)

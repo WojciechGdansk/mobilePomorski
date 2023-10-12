@@ -177,4 +177,5 @@ pyrightconfig.json
 email_configurator/bbb.docx
 database_connection/data.db
 data.db
+new.docx
 # End of https://www.toptal.com/developers/gitignore/api/python

@@ -3,6 +3,7 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.app import MDApp
 from form_data.form_info import FourthLeague
 from word_creator.word_document_creator import CreateWord
+from email_configurator.email_sending_module import Email
 
 
 class FourthLeagueScreen(Screen):
@@ -10,6 +11,9 @@ class FourthLeagueScreen(Screen):
     other_remarks_text_field = ''
     form = FourthLeague()
     match_info = None
+    # data from DB saved in app storage
+    sender = None
+    receiver = None
     user_name = None
     forth_league_attr = ['parking', 'statute', 'field_verified_document', 'match_info_protocol', 'security_director',
                          'announcer', 'support_services', 'medical_point', 'stretcher', 'field_fenced',
@@ -79,6 +83,7 @@ class FourthLeagueScreen(Screen):
         self.erase_missing_fields_field()
         self.get_info_from_storage()
         CreateWord(self.match_info, self.form, self.user_name).create_document()
+        Email(self.sender, self.receiver, self.user_name).send_email()
 
     def all_fields_selected(self):
         """check if all required checkboxes are selected"""
@@ -130,8 +135,22 @@ class FourthLeagueScreen(Screen):
             self.user_name = app.user_name
             del app.user_name
 
+    def set_sender(self, app: MDApp):
+        """get sender email address saved in memory and set as variable"""
+        if hasattr(app, 'sender'):
+            self.sender = app.sender
+            del app.sender
+
+    def set_received(self, app: MDApp):
+        """get receiver email address saved in memory and set as variable"""
+        if hasattr(app, 'receiver'):
+            self.receiver = app.receiver
+            del app.receiver
+
     def get_info_from_storage(self):
         """run methods to get necessary info from app memory"""
         app = MDApp.get_running_app()
         self.set_match_details(app)
         self.set_user_name(app)
+        self.set_sender(app)
+        self.set_received(app)
