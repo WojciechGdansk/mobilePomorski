@@ -4,6 +4,7 @@ from kivymd.app import MDApp
 from form_data.form_info import FourthLeague
 from word_creator.word_document_creator import CreateWord
 from email_configurator.email_sending_module import Email
+from user_data.user_info import User
 
 
 class FourthLeagueScreen(Screen):
@@ -12,9 +13,7 @@ class FourthLeagueScreen(Screen):
     form = FourthLeague()
     match_info = None
     # data from DB saved in app storage
-    sender = None
-    receiver = None
-    user_name = None
+    user_info: User = object
     forth_league_attr = ['parking', 'statute', 'field_verified_document', 'match_info_protocol', 'security_director',
                          'announcer', 'support_services', 'medical_point', 'stretcher', 'field_fenced',
                          'secured_passage']
@@ -82,8 +81,8 @@ class FourthLeagueScreen(Screen):
         # haven't been selected. When user click again Save button new created field should be erased
         self.erase_missing_fields_field()
         self.get_info_from_storage()
-        CreateWord(self.match_info, self.form, self.user_name).create_document()
-        Email(self.sender, self.receiver, self.user_name).send_email()
+        CreateWord(self.match_info, self.form, self.user_info.user).create_document()
+        Email(self.user_info.sender, self.user_info.receiver, self.user_info.user).send_email()
 
     def all_fields_selected(self):
         """check if all required checkboxes are selected"""
@@ -127,30 +126,16 @@ class FourthLeagueScreen(Screen):
         if hasattr(app, "match_details"):
             self.match_info = app.match_details
             del app.match_details
-        self.set_user_name(app)
 
-    def set_user_name(self, app: MDApp):
+    def set_user_object(self, app: MDApp):
         """get user name saved in memory and set as variable"""
-        if hasattr(app, 'user_name'):
-            self.user_name = app.user_name
-            del app.user_name
-
-    def set_sender(self, app: MDApp):
-        """get sender email address saved in memory and set as variable"""
-        if hasattr(app, 'sender'):
-            self.sender = app.sender
-            del app.sender
-
-    def set_received(self, app: MDApp):
-        """get receiver email address saved in memory and set as variable"""
-        if hasattr(app, 'receiver'):
-            self.receiver = app.receiver
-            del app.receiver
+        if hasattr(app, 'info_from_db'):
+            self.user_info = app.info_from_db
+            del app.info_from_db
 
     def get_info_from_storage(self):
         """run methods to get necessary info from app memory"""
         app = MDApp.get_running_app()
         self.set_match_details(app)
-        self.set_user_name(app)
-        self.set_sender(app)
-        self.set_received(app)
+        self.set_user_object(app)
+

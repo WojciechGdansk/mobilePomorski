@@ -2,6 +2,9 @@ from kivy.uix.screenmanager import Screen
 from kivymd.uix.textfield import MDTextField
 from kivymd.app import MDApp
 from form_data.form_info import RegionalLeague
+from user_data.user_info import User
+from word_creator.word_document_creator import CreateWord
+from email_configurator.email_sending_module import Email
 
 
 class RegionalLeagueScreen(Screen):
@@ -9,7 +12,8 @@ class RegionalLeagueScreen(Screen):
     other_remarks_text_field = ''
     form = RegionalLeague()
     match_info = None
-    user_name = None
+    # data from DB saved in app storage
+    user_info: User = object
     regional_league_attr = ['parking', 'statute', 'field_verified_document', 'match_info_protocol', 'club_coordinator',
                             'support_services', 'medical_point', 'stretcher', 'field_fenced', 'secured_passage']
 
@@ -76,6 +80,8 @@ class RegionalLeagueScreen(Screen):
         # haven't been selected. When user click again Save button new created field should be erased
         self.erase_missing_fields_field()
         self.get_info_from_storage()
+        CreateWord(self.match_info, self.form, self.user_info.user).create_document()
+        Email(self.user_info.sender, self.user_info.receiver, self.user_info.user).send_email()
 
     def all_fields_selected(self):
         """check if all required checkboxes are selected"""
@@ -119,16 +125,15 @@ class RegionalLeagueScreen(Screen):
         if hasattr(app, "match_details"):
             self.match_info = app.match_details
             del app.match_details
-        self.set_user_name(app)
 
-    def set_user_name(self, app: MDApp):
+    def set_user_object(self, app: MDApp):
         """get user name saved in memory and set as variable"""
-        if hasattr(app, 'user_name'):
-            self.user_name = app.user_name
-            del app.user_name
+        if hasattr(app, 'info_from_db'):
+            self.user_info = app.info_from_db
+            del app.info_from_db
 
     def get_info_from_storage(self):
         """run methods to get necessary info from app memory"""
         app = MDApp.get_running_app()
         self.set_match_details(app)
-        self.set_user_name(app)
+        self.set_user_object(app)

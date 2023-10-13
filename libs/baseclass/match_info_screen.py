@@ -42,7 +42,7 @@ class MatchInfoScreen(Screen):
 
     def validate_input(self, chosen_date, home_team, away_team):
         input_valid = True
-        pattern = "([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))"
+        pattern = r"([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))"
         if not re.match(pattern, chosen_date):
             self.ids.selected_date.error = True
             self.ids.selected_date.helper_text = "Nieprawidłowa data"

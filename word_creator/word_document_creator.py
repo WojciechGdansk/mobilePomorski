@@ -100,7 +100,8 @@ class CreateWord:
                 row.cells[0].text = str(index + 1)
                 row.cells[1].width = Cm(16.15)
                 row.cells[1].text = TableData.dane[key]
-                row.cells[1].add_paragraph(f'{self.stadium_facilities.other_remarks}')
+                other_remarks = self.stadium_facilities.other_remarks
+                row.cells[1].add_paragraph(f'{other_remarks if type(other_remarks) is not bool else ""}')
             else:
                 table = self.doc.add_table(rows=1, cols=4, style="Table Grid")
                 for row in table.rows:
