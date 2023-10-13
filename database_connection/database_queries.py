@@ -1,6 +1,5 @@
 from sqlite3 import OperationalError
-
-from .database_settings import DBConnection
+from database_connection.database_settings import DBConnection
 
 
 class QueriesToDB:
