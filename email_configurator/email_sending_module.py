@@ -15,16 +15,17 @@ class Email:
         self.receiver = receiver
         self.user_name = user_name
 
-    def send_email(self):
+    def send_email(self, document_name="Załącznik do sprawozadnia - MW.docx"):
         try:
             response = requests.post(
                 f"https://api.mailgun.net/v3/{self.api_domain}/messages",
                 auth=("api", self.api_key),
                 data={"from": f"{self.user_name} <{self.sender}>",
                       "to": [f"{self.receiver}"],
-                      "subject": "Hello",
-                      "text": "Testing some Mailgun awesomness!"},
-                files=[('attachment', ('new.docx', open('new.docx', 'rb').read()))])
+                      "subject": "Załącznik do sprawozdania",
+                      "text": "Dzień dobry,"
+                              "w załączeniu raport z meczu"},
+                files=[('attachment', (f'{document_name}', open(f'{document_name}', 'rb').read()))])
             if response.status_code == 200:
                 return True
             else:
