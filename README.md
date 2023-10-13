@@ -17,3 +17,4 @@ App has been built using:
 ## How it works?
 
 At first user needs to enter settings and set email addresses and name. App won't let user to fill to form without adjusting preferences in settings section
+![settings_not_set](images/empty.gif)
