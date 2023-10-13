@@ -1,0 +1,2 @@
+class SendingErrors(BaseException):
+    pass

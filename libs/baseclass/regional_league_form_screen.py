@@ -5,9 +5,12 @@ from form_data.form_info import RegionalLeague
 from user_data.user_info import User
 from word_creator.word_document_creator import CreateWord
 from email_configurator.email_sending_module import Email
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
 
 
 class RegionalLeagueScreen(Screen):
+    dialog = None
     text_after_activating_and_deactivating_field = ''
     other_remarks_text_field = ''
     form = RegionalLeague()
@@ -81,7 +84,11 @@ class RegionalLeagueScreen(Screen):
         self.erase_missing_fields_field()
         self.get_info_from_storage()
         CreateWord(self.match_info, self.form, self.user_info.user).create_document()
-        Email(self.user_info.sender, self.user_info.receiver, self.user_info.user).send_email()
+        try:
+            Email(self.user_info.sender, self.user_info.receiver, self.user_info.user).send_email()
+            self.show_success_dialog()
+        except SendingErrors as e:
+            self.show_error_dialog(e)
 
     def all_fields_selected(self):
         """check if all required checkboxes are selected"""
@@ -137,3 +144,22 @@ class RegionalLeagueScreen(Screen):
         app = MDApp.get_running_app()
         self.set_match_details(app)
         self.set_user_object(app)
+
+    def show_success_dialog(self):
+        self.dialog = MDDialog(
+            text="Wysłano",
+            buttons=[MDFlatButton(text="Wyjdź", on_release=self.close_dialog)]
+        )
+        self.dialog.open()
+
+    def show_error_dialog(self, error_text):
+        self.dialog = MDDialog(
+            text=f"{error_text}",
+            buttons=[MDFlatButton(text="Wyjdź", on_release=self.close_dialog)]
+        )
+        self.dialog.open()
+
+    def close_dialog(self, obj):
+        self.dialog.dismiss()
+        app = MDApp.get_running_app()
+        app.root.current = "StartScreen"
