@@ -15,7 +15,7 @@ class Email:
         self.receiver = receiver
         self.user_name = user_name
 
-    def send_email(self, document_name="Załącznik do sprawozadnia - MW.docx"):
+    def send_email(self, document_name="Załącznik do sprawozdania - MW.docx"):
         try:
             response = requests.post(
                 f"https://api.mailgun.net/v3/{self.api_domain}/messages",
