@@ -25,7 +25,7 @@ class CreateWord:
         section = self.doc.sections[0]
         section.page_width, section.page_height = map(Cm, self.page_size)
 
-    def save_document(self, document_name="Załącznik do sprawozadnia - MW.docx"):
+    def save_document(self, document_name="Załącznik do sprawozdania - MW.docx"):
         self.doc.save(f'{document_name}')
 
     def set_normal_style(self):
