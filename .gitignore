@@ -177,4 +177,5 @@ pyrightconfig.json
 database_connection/data.db
 data.db
 Załącznik do sprawozdania - MW.docx
+email_configurator/email_settings.py
 # End of https://www.toptal.com/developers/gitignore/api/python
