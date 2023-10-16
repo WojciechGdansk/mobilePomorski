@@ -33,7 +33,8 @@ If all fields are selected and connection with internet is establish app will cr
 ## Installation
 
 1) Using pipenv install required packages from pipfile
-2) Create .env file with details
+2) For Windows machine package pypiwin32 is required
+3) Create .env file with details
 
 ```
 API_KEY=YOUR API KEY
@@ -41,4 +42,4 @@ API_DOMAIN=YOU API DOMAIN
 ```
 App uses mailgun email service so domain and key needs to be get from this service
 
-3) Run main.py file to start app
+4) Run main.py file to start app
