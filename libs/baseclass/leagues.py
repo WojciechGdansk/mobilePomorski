@@ -1,7 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.textfield import MDTextField
 from kivymd.app import MDApp
-from form_data.form_info import AllMatchesInfo
+from form_data.form_info import FourthLeague, RegionalLeague
 from word_creator.word_document_creator import CreateWord
 from email_configurator.email_sending_module import Email
 from user_data.user_info import User
@@ -14,7 +14,7 @@ class League(Screen):
     dialog = None
     text_after_activating_and_deactivating_field = ''
     other_remarks_text_field = ''
-    form = AllMatchesInfo()
+    form: [FourthLeague, RegionalLeague] = object
     match_info = None
     # data from DB saved in app storage
     user_info: User = object
