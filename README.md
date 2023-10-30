@@ -42,4 +42,5 @@ API_DOMAIN=YOU API DOMAIN
 ```
 App uses mailgun email service so domain and key needs to be get from this service
 
+Without that file app will run but sending emails would be impossible, only word document will be createad.
 4) Run main.py file to start app
