@@ -5,7 +5,8 @@ from docx.enum.style import WD_STYLE_TYPE
 from form_data.form_info import RegionalLeague, FourthLeague
 from form_data.match_info import MatchInfo
 from word_creator.word_table_data import TableData
-
+from kivymd.app import MDApp
+import os
 
 class CreateWord:
     doc = Document()
@@ -26,7 +27,8 @@ class CreateWord:
         section.page_width, section.page_height = map(Cm, self.page_size)
 
     def save_document(self, document_name="Załącznik do sprawozdania - MW.docx"):
-        self.doc.save(f'{document_name}')
+        path = os.path.join(MDApp.get_running_app().user_data_dir, document_name)
+        self.doc.save(path)
 
     def set_normal_style(self):
         default_font = self.doc.styles['Normal'].font

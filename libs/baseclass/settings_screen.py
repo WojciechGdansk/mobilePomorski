@@ -40,7 +40,7 @@ class SettingsScreen(Screen):
     @staticmethod
     def email_validator(sender_email_address):
         try:
-            validate_email(sender_email_address)
+            validate_email(sender_email_address, dns_resolver=False, check_deliverability=False)
             return True
         except EmailNotValidError:
             return False
