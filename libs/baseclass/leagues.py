@@ -8,6 +8,7 @@ from user_data.user_info import User
 from email_configurator.errors_handling import SendingErrors
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
+from kivy.core.window import Window
 
 
 class League(Screen):
@@ -31,7 +32,8 @@ class League(Screen):
 
             if checkbox.group == "other_remarks" and user_answer:  # if user selected Yes in other remarks
                 self.other_remarks_text_field = MDTextField(multiline=True, id="created_remarks",
-                                                            text=self.text_after_activating_and_deactivating_field)
+                                                            text=self.text_after_activating_and_deactivating_field,
+                                                            on_focus=self.keyboard_display())
                 self.ids.main_box.add_widget(self.other_remarks_text_field)
                 self.other_remarks_to_add = True
                 self.other_remarks_selected = True
@@ -100,8 +102,6 @@ class League(Screen):
         self.erase_missing_fields_field()
         list_of_fields = self.get_not_selected_fields()
         if len(list_of_fields) > 0:
-            # height of field related to width of screen
-            self.ids.missing_fields_layout.height = (len(list_of_fields) / self.width) * 6000
             # for plural and singular version
             text_to_print = "Nie zaznaczono pól: " + ", ".join(list_of_fields) \
                 if len(list_of_fields) > 1 else "Nie zaznaczono pola " + list_of_fields[0]
@@ -110,17 +110,15 @@ class League(Screen):
     def erase_missing_fields_field(self):
         """remove list of missing fields at the bottom of screen"""
         self.ids.missing_fields.text = ''
-        self.ids.missing_fields_layout.height = 0
 
     def set_match_details(self, app: MDApp):
-        """get match details object saved in memory and set as object here
-        get user name from memory"""
+        """get match details object saved in memory and set as object here"""
         if hasattr(app, "match_details"):
             self.match_info = app.match_details
             del app.match_details
 
     def set_user_object(self, app: MDApp):
-        """get user name saved in memory and set as variable"""
+        """get username saved in memory and set as variable"""
         if hasattr(app, 'info_from_db'):
             self.user_info = app.info_from_db
             del app.info_from_db
@@ -149,3 +147,6 @@ class League(Screen):
         self.dialog.dismiss()
         app = MDApp.get_running_app()
         app.root.current = "StartScreen"
+
+    def keyboard_display(self):
+        Window.softinput_mode = "below_target"
