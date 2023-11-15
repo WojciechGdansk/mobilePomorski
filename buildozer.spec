@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = kivymd,email-validator==2.0.0.post2,python-docx-1,sqlite3,pillow,kivy,dnspython,python3,requests,urllib3,chardet,idna,certifi,lxml,python-dotenv
+requirements = kivymd,email-validator==2.0.0.post2,python-docx-1,sqlite3,pillow,kivy==master,https://github.com/kivymd/KivyMD/archive/master.zip,dnspython,python3,requests,urllib3,chardet,idna,certifi,lxml,python-dotenv
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
