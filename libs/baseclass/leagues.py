@@ -9,6 +9,7 @@ from email_configurator.errors_handling import SendingErrors
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 from kivy.core.window import Window
+from kivy.utils import platform
 
 
 class League(Screen):
@@ -31,9 +32,13 @@ class League(Screen):
                 setattr(self.form, checkbox.group, user_answer)
 
             if checkbox.group == "other_remarks" and user_answer:  # if user selected Yes in other remarks
-                self.other_remarks_text_field = MDTextField(multiline=True, id="created_remarks",
-                                                            text=self.text_after_activating_and_deactivating_field,
-                                                            on_focus=self.keyboard_display())
+                if platform == "android":
+                    self.other_remarks_text_field = MDTextField(multiline=True, id="created_remarks",
+                                                                text=self.text_after_activating_and_deactivating_field,
+                                                                on_focus=self.keyboard_display())
+                else:
+                    self.other_remarks_text_field = MDTextField(multiline=True, id="created_remarks",
+                                                                text=self.text_after_activating_and_deactivating_field)
                 self.ids.main_box.add_widget(self.other_remarks_text_field)
                 self.other_remarks_to_add = True
                 self.other_remarks_selected = True
