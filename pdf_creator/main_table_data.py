@@ -2,6 +2,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus.para import Paragraph
 
 from form_data.form_info import FourthLeague, RegionalLeague
+from pdf_creator.other_remarks_table_data import OtherRemarksTableData
 
 
 class MainTableData:
@@ -38,17 +39,23 @@ class MainTableData:
         counter = 1
         for key, value in MainTableData.data.items():
             if key == "other_remarks":
-                break
-            try:
-                selected = self.stadium_facilities.__getattribute__(key)
-            except AttributeError:
-                selected = None
-            if selected:
-                table.append([counter, value, bold_underline_paragraph_yes, "NIE"])
-            elif selected == False:
-                table.append([counter, value, "TAK", bold_underline_paragraph_no])
+                other_remarks = OtherRemarksTableData()
+                other_remarks.set_counter(counter)
+                other_remarks.set_description(value)
+                other_remarks.set_other_remarks(self.stadium_facilities.__getattribute__(key))
             else:
-                table.append([counter, value, "TAK", "NIE"])
-            table.append([])
-            counter += 1
+                try:
+                    selected = self.stadium_facilities.__getattribute__(key)
+                except AttributeError:
+                    selected = None
+                if selected:
+                    table.append([counter, value, bold_underline_paragraph_yes, "NIE"])
+                elif selected == False:
+                    table.append([counter, value, "TAK", bold_underline_paragraph_no])
+                else:
+                    table.append([counter, value, "TAK", "NIE"])
+
+                # add empty row
+                table.append([])
+                counter += 1
         return table

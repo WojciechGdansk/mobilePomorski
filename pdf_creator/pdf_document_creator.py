@@ -8,6 +8,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from form_data.form_info import FourthLeague
 from form_data.match_info import MatchInfo
 from pdf_creator.main_table_data import MainTableData
+from pdf_creator.other_remarks_table_data import OtherRemarksTableData
 from pdf_creator.top_table_data import TableData
 
 
@@ -29,7 +30,10 @@ class PDFDocument:
         stadion_facilities.parking = True
         stadion_facilities.statute = False
         stadion_facilities.field_verified_document = True
+        stadion_facilities.other_remarks = "dupa zbita sialaFJKSDFLKSDFKSDJCSDKNCJKNDJKNCJKSDNKVJDNVJKSNVJKNDSJKVJKSDNVKJSDNla"
         self.draw_main_table(MainTableData(stadion_facilities).table_data())
+        other_rema = OtherRemarksTableData()
+        self.draw_other_remarks_table(other_rema.other_remarks_table_data())
         self.save_file()
 
     def set_filename_and_size(self, filename="Załącznik do sprawozdania - MW.pdf") -> None:
@@ -54,14 +58,26 @@ class PDFDocument:
         col_widths_in_points = list(map(lambda x: self.cm_to_points(x), col_widths_in_cm))
         table = Table(data, colWidths=col_widths_in_points)
         table.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 1, colors.black),
-                                   ('FONTNAME', (0, 0), (-1, -1), "Cambria")
+                                   ('FONTNAME', (0, 0), (-1, -1), "Cambria"),
                                    ]))
-        table.wrapOn(self.canvas, self.cm_to_points(2), self.cm_to_points(9.4))
-        table.drawOn(self.canvas, self.cm_to_points(2), self.cm_to_points(9.4))
+        table.wrapOn(self.canvas, self.cm_to_points(2), self.cm_to_points(9.2))
+        table.drawOn(self.canvas, self.cm_to_points(2), self.cm_to_points(9.2))
+
+    def draw_other_remarks_table(self, data: OtherRemarksTableData):
+        col_width_in_cm = [0.94, 3, 13.15]
+        col_width_in_points = list(map(lambda x: self.cm_to_points(x), col_width_in_cm))
+        table = Table(data, colWidths=col_width_in_points, rowHeights=100)
+        table.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 1, colors.black),
+                                   ('FONTNAME', (0, 0), (-1, -1), "Cambria"),
+                                   ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                   ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                                   ('WORDWRAP', (0, 0), (-1, -1), True)
+                                   ]))
+        table.wrapOn(self.canvas, self.cm_to_points(2), self.cm_to_points(5.5))
+        table.drawOn(self.canvas, self.cm_to_points(2), self.cm_to_points(5.5))
 
     def save_file(self):
         self.canvas.save()
-
 
     @staticmethod
     def register_fonts():
