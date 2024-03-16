@@ -1,11 +1,12 @@
 from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import Table, TableStyle
+from reportlab.platypus import Table, TableStyle, Paragraph
 from reportlab.pdfbase.ttfonts import TTFont
 
-from form_data.form_info import FourthLeague
+from form_data.form_info import FourthLeague, RegionalLeague
 from form_data.match_info import MatchInfo
 from pdf_creator.main_table_data import MainTableData
 from pdf_creator.other_remarks_table_data import OtherRemarksTableData
@@ -13,27 +14,21 @@ from pdf_creator.top_table_data import TableData
 
 
 class PDFDocument:
-    def __init__(self):
+    def __init__(self, match_data_object: MatchInfo, stadium_facilities: [FourthLeague, RegionalLeague], user_name):
         self.canvas = Canvas
+        self.match_data = match_data_object
+        self.stadium_facilities = stadium_facilities
+        self.user_name = user_name
 
     def create_document(self):
         self.set_filename_and_size()
         self.register_fonts()
         self.draw_text("ZAŁĄCZNIK DO SPRAWOZDANIA SĘDZIEGO LUB OBSERWATORA SĘDZIÓW")
-        match = MatchInfo()
-        match.league = "iv liga"
-        match.date = "22-05-2022"
-        match.home_team = "Anioly"
-        match.away_team = "Powsiel"
-        self.draw_top_table(TableData(match).table_info())
-        stadion_facilities = FourthLeague()
-        stadion_facilities.parking = True
-        stadion_facilities.statute = False
-        stadion_facilities.field_verified_document = True
-        stadion_facilities.other_remarks = "dupa zbita sialaFJKSDFLKSDFKSDJCSDKNCJKNDJKNCJKSDNKVJDNVJKSNVJKNDSJKVJKSDNVKJSDNla"
-        self.draw_main_table(MainTableData(stadion_facilities).table_data())
-        other_rema = OtherRemarksTableData()
-        self.draw_other_remarks_table(other_rema.other_remarks_table_data())
+        self.draw_top_table(TableData(self.match_data).table_info())
+        self.draw_main_table(MainTableData(self.stadium_facilities).table_data())
+        other_remarks = OtherRemarksTableData()
+        self.draw_other_remarks_table(other_remarks.other_remarks_table_data())
+        self.draw_bottom_table()
         self.save_file()
 
     def set_filename_and_size(self, filename="Załącznik do sprawozdania - MW.pdf") -> None:
@@ -64,9 +59,15 @@ class PDFDocument:
         table.drawOn(self.canvas, self.cm_to_points(2), self.cm_to_points(9.2))
 
     def draw_other_remarks_table(self, data: OtherRemarksTableData):
+        # Configure style and word wrap
+        s = getSampleStyleSheet()
+        s = s["BodyText"]
+        s.wordWrap = 'CJK'
+        data2 = [[Paragraph(cell, s) for cell in row] for row in data]
+        # set column width
         col_width_in_cm = [0.94, 3, 13.15]
         col_width_in_points = list(map(lambda x: self.cm_to_points(x), col_width_in_cm))
-        table = Table(data, colWidths=col_width_in_points, rowHeights=100)
+        table = Table(data2, colWidths=col_width_in_points, rowHeights=100)
         table.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 1, colors.black),
                                    ('FONTNAME', (0, 0), (-1, -1), "Cambria"),
                                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
@@ -76,18 +77,25 @@ class PDFDocument:
         table.wrapOn(self.canvas, self.cm_to_points(2), self.cm_to_points(5.5))
         table.drawOn(self.canvas, self.cm_to_points(2), self.cm_to_points(5.5))
 
+    def draw_bottom_table(self):
+        col_widths_in_cm = [6, 12]
+        col_widths_in_points = list(map(lambda x: self.cm_to_points(x), col_widths_in_cm))
+        data = [["Imię i nazwisko sporządzającego", self.user_name]]
+        table = Table(data, colWidths=col_widths_in_points)
+        table.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 1, colors.black),
+                                   ('FONTNAME', (0, 0), (-1, -1), "Cambria"),
+                                   ]))
+        table.wrapOn(self.canvas, self.cm_to_points(2), self.cm_to_points(1))
+        table.drawOn(self.canvas, self.cm_to_points(2), self.cm_to_points(1))
+
     def save_file(self):
         self.canvas.save()
 
     @staticmethod
     def register_fonts():
-        pdfmetrics.registerFont(TTFont("Cambria", "cambria.ttf"))
-        pdfmetrics.registerFont(TTFont("Cambria Bold", "Cambria Bold.ttf"))
+        pdfmetrics.registerFont(TTFont("Cambria", "media/cambria.ttf"))
+        pdfmetrics.registerFont(TTFont("Cambria Bold", "media/Cambria Bold.ttf"))
 
     @staticmethod
     def cm_to_points(cm):
         return cm * 28.35
-
-
-doc = PDFDocument()
-doc.create_document()

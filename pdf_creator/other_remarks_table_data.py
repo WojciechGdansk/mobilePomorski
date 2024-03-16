@@ -24,4 +24,4 @@ class OtherRemarksTableData:
         self.other_remarks_text = other_remarks_text
 
     def other_remarks_table_data(self):
-        return [([self.counter, self.description, self.other_remarks_text])]
+        return [([str(self.counter), self.description, self.other_remarks_text])]

@@ -16,7 +16,7 @@ class Email:
         self.receiver = receiver
         self.user_name = user_name
 
-    def send_email(self, document_name="Załącznik do sprawozdania - MW.docx"):
+    def send_email(self, document_name="Załącznik do sprawozdania - MW.pdf"):
         try:
             path = os.path.join(MDApp.get_running_app().user_data_dir, document_name)
             response = requests.post(
