@@ -1,3 +1,4 @@
+from kivymd.app import MDApp
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.pdfbase import pdfmetrics
@@ -11,6 +12,8 @@ from form_data.match_info import MatchInfo
 from pdf_creator.main_table_data import MainTableData
 from pdf_creator.other_remarks_table_data import OtherRemarksTableData
 from pdf_creator.top_table_data import TableData
+
+import os
 
 
 class PDFDocument:
@@ -32,7 +35,8 @@ class PDFDocument:
         self.save_file()
 
     def set_filename_and_size(self, filename="Załącznik do sprawozdania - MW.pdf") -> None:
-        self.canvas = Canvas(filename, pagesize=A4)
+        path = os.path.join(MDApp.get_running_app().user_data_dir, filename)
+        self.canvas = Canvas(path, pagesize=A4)
 
     def draw_text(self, text_to_draw) -> None:
         self.canvas.setFont("Cambria Bold", 14)
@@ -59,26 +63,30 @@ class PDFDocument:
         table.drawOn(self.canvas, self.cm_to_points(2), self.cm_to_points(9.2))
 
     def draw_other_remarks_table(self, data: OtherRemarksTableData):
-        # Configure style and word wrap
-        s = getSampleStyleSheet()
-        s = s["BodyText"]
-        s.wordWrap = 'CJK'
-        data2 = [[Paragraph(cell, s) for cell in row] for row in data]
+        d = OtherRemarksTableData()
+        if d.other_remarks_text:
+            # Configure style and word wrap
+            s = getSampleStyleSheet()
+            s = s["BodyText"]
+            s.wordWrap = 'CJK'
+            data2 = [[Paragraph(cell, s) for cell in row] for row in data]
+        else:
+            data2 = self.change_data_in_list_for_other_remarks_if_remarks_is_false(data)
         # set column width
         col_width_in_cm = [0.94, 3, 13.15]
         col_width_in_points = list(map(lambda x: self.cm_to_points(x), col_width_in_cm))
-        table = Table(data2, colWidths=col_width_in_points, rowHeights=100)
+        table = Table(data2, colWidths=col_width_in_points, rowHeights=200)
         table.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 1, colors.black),
                                    ('FONTNAME', (0, 0), (-1, -1), "Cambria"),
                                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
                                    ('VALIGN', (0, 0), (-1, -1), 'TOP'),
                                    ('WORDWRAP', (0, 0), (-1, -1), True)
                                    ]))
-        table.wrapOn(self.canvas, self.cm_to_points(2), self.cm_to_points(5.5))
-        table.drawOn(self.canvas, self.cm_to_points(2), self.cm_to_points(5.5))
+        table.wrapOn(self.canvas, self.cm_to_points(2), self.cm_to_points(2))
+        table.drawOn(self.canvas, self.cm_to_points(2), self.cm_to_points(2))
 
     def draw_bottom_table(self):
-        col_widths_in_cm = [6, 12]
+        col_widths_in_cm = [6, 11.2]
         col_widths_in_points = list(map(lambda x: self.cm_to_points(x), col_widths_in_cm))
         data = [["Imię i nazwisko sporządzającego", self.user_name]]
         table = Table(data, colWidths=col_widths_in_points)
@@ -90,6 +98,12 @@ class PDFDocument:
 
     def save_file(self):
         self.canvas.save()
+
+    @staticmethod
+    def change_data_in_list_for_other_remarks_if_remarks_is_false(data: list):
+        # change value in nested list- enter empty string instead of false
+        data[0][2] = ""
+        return data
 
     @staticmethod
     def register_fonts():
