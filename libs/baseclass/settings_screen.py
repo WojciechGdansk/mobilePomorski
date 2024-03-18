@@ -14,15 +14,13 @@ class SettingsScreen(Screen):
         if emails_in_db:
             sender, receiver, user_name = emails_in_db
             self.ids.from_email_address.text = sender
-            self.ids.to_email_address.text = receiver
             self.ids.name_and_last_name.text = user_name
 
-    def save_email_details(self):
+    def save_email_details(self, to_email_address=""):
         from_email_text = self.ids.from_email_address.text
-        to_email_text = self.ids.to_email_address.text
+        to_email_text = to_email_address
         user_name = self.ids.name_and_last_name.text
-        if self.email_validator(from_email_text) and self.email_validator(to_email_text) and \
-                self.user_name_validator(user_name):
+        if self.email_validator(from_email_text) and self.user_name_validator(user_name):
             # save to DB data provided by user in settings screen only if data are correct
             QueriesToDB(from_email_text, to_email_text, user_name).save_to_db()
             # when correct save to DB and go to start screen
@@ -30,9 +28,6 @@ class SettingsScreen(Screen):
         if not self.email_validator(from_email_text):
             self.ids.from_email_address.error = True
             self.ids.from_email_address.helper_text = "Niepoprawny adres email"
-        if not self.email_validator(to_email_text):
-            self.ids.to_email_address.error = True
-            self.ids.to_email_address.helper_text = "Niepoprawny adres email"
         if not self.user_name_validator(user_name):
             self.ids.name_and_last_name.error = True
             self.ids.name_and_last_name.helper_text = "Błędne imię i nazwisko, wymagane przynajmniej 5 znaków"
