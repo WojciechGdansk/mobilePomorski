@@ -71,7 +71,7 @@ class PDFDocument:
             s.wordWrap = 'CJK'
             data2 = [[Paragraph(cell, s) for cell in row] for row in data]
         else:
-            data2 = self.change_data_in_list_for_other_remarks_if_remarks_is_false(data)
+            data2 = data
         # set column width
         col_width_in_cm = [0.94, 3, 13.15]
         col_width_in_points = list(map(lambda x: self.cm_to_points(x), col_width_in_cm))
@@ -98,12 +98,6 @@ class PDFDocument:
 
     def save_file(self):
         self.canvas.save()
-
-    @staticmethod
-    def change_data_in_list_for_other_remarks_if_remarks_is_false(data: list):
-        # change value in nested list- enter empty string instead of false
-        data[0][2] = ""
-        return data
 
     @staticmethod
     def register_fonts():

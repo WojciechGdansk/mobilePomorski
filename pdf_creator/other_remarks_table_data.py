@@ -21,7 +21,10 @@ class OtherRemarksTableData:
         self.description = description
 
     def set_other_remarks(self, other_remarks_text):
-        self.other_remarks_text = other_remarks_text
+        if other_remarks_text:
+            self.other_remarks_text = other_remarks_text
+        else:
+            self.other_remarks_text = ""
 
     def other_remarks_table_data(self):
         return [([str(self.counter), self.description, self.other_remarks_text])]
