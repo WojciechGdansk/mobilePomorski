@@ -1,14 +1,17 @@
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.textfield import MDTextField
 from kivymd.app import MDApp
+
 from form_data.form_info import FourthLeague, RegionalLeague
 from word_creator.word_document_creator import CreateWord
 from email_configurator.email_sending_module import Email
 from user_data.user_info import User
 from email_configurator.errors_handling import SendingErrors
+from pdf_creator.pdf_document_creator import PDFDocument
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 from kivy.core.window import Window
+from kivy.utils import platform
 
 
 class League(Screen):
@@ -31,9 +34,13 @@ class League(Screen):
                 setattr(self.form, checkbox.group, user_answer)
 
             if checkbox.group == "other_remarks" and user_answer:  # if user selected Yes in other remarks
-                self.other_remarks_text_field = MDTextField(multiline=True, id="created_remarks",
-                                                            text=self.text_after_activating_and_deactivating_field,
-                                                            on_focus=self.keyboard_display())
+                if platform == "android":
+                    self.other_remarks_text_field = MDTextField(multiline=True, id="created_remarks",
+                                                                text=self.text_after_activating_and_deactivating_field,
+                                                                on_focus=self.keyboard_display())
+                else:
+                    self.other_remarks_text_field = MDTextField(multiline=True, id="created_remarks",
+                                                                text=self.text_after_activating_and_deactivating_field)
                 self.ids.main_box.add_widget(self.other_remarks_text_field)
                 self.other_remarks_to_add = True
                 self.other_remarks_selected = True
@@ -71,7 +78,8 @@ class League(Screen):
         # haven't been selected. When user click again Save button new created field should be erased
         self.erase_missing_fields_field()
         self.get_info_from_storage()
-        CreateWord(self.match_info, self.form, self.user_info.user).create_document()
+        # CreateWord(self.match_info, self.form, self.user_info.user).create_document()
+        PDFDocument(self.match_info, self.form, self.user_info.user).create_document()
         try:
             Email(self.user_info.sender, self.user_info.receiver, self.user_info.user).send_email()
             self.show_success_dialog()

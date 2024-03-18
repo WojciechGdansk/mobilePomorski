@@ -8,6 +8,7 @@ kivymd = "*"
 email-validator = "*"
 python-dotenv = "*"
 python-docx-1 = "*"
+reportlab = "*"
 
 [dev-packages]
 
